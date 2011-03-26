@@ -1,0 +1,15 @@
+calendars = Jon Sagotsky 
+calendars = Work
+calendars = Us
+calendars = Band
+
+colors = green
+colors = red
+colors = cyan
+colors = purple
+
+format = dzen
+days = 14
+refresh=600
+seconds=60
+timezone=America/New_York
