@@ -1,0 +1,30 @@
+Jon Sagotsky
+gcal-ticker
+
+gcal-ticker uses perl to parse your calendar from Google CL.  It displays text 
+updates for as long as it stays running.  The idea is to pipe it into an xmobar
+or dzen and have an agenda line displayed on your screen.
+
+Requirements:
+    Google CL           (svn 543 or newer)
+    gdata-python        (2.0.12+ should work, but I'm only testing on 2.0.14)
+    perl
+    perl DateTime       (libdatetime-perl)
+    perl AppConfig      (libappconfig-perl)
+    perl Tie:IxHashA    (libtie-ixhash-perl)
+Recommended
+    dzen2 or xmobar
+
+ticker.pl can be called directly.  use -help, -h, or -? for command line options.
+
+ticker.sh is just a wrapper script to pipe output into dzen or wherever.  You will have to
+customize its path and probably customize its dzen options.
+
+All command line options can be specified in a .gcalticker file.  This is recommended.
+An example dotgcalticker file is included.
+
+TODO:
+    fix perl lib definitions to find gtEvent.pm
+    event in progress sticky (maybe indicate with color and a new flag?  prepend time with a symbol?)
+    notify-send alerts (optional)
+    output templates (eventually)
