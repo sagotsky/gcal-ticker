@@ -24,7 +24,8 @@ All command line options can be specified in a .gcalticker file.  This is recomm
 An example dotgcalticker file is included.
 
 TODO:
-    fix perl lib definitions to find gtEvent.pm
+    fix perl lib definitions to find gtEvent.pm (this one is downright embarrassing.)
     event in progress sticky (maybe indicate with color and a new flag?  prepend time with a symbol?)
+    dzen2 backgrounds/fonts.  
     notify-send alerts (optional)
     output templates (eventually)
