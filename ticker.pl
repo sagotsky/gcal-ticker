@@ -61,6 +61,7 @@ sub getCalData {
     d("getting gcal data");
 
     my $start = DateTime->now( time_zone => $cfg->timezone() ); #start needs a bigger range if we're catching older long term events
+    $start->subtract( days => $cfg->days() ); #make sure to catch older events that may not have finished.
     my $end = DateTime->now( time_zone => $cfg->timezone() );
     $end->add( days => $cfg->days() );
     my $dates = '-d' . $start->ymd . ',' . $end->ymd;
@@ -121,7 +122,9 @@ in from your ~/.gtickerrc file.  Calendars and colors are *required*
 Display this help message
 
 --days -d
-Number of days of calendar data to retrieve
+Range of days of data to retrieve.  Goes forward and back.  So if you
+retrieve 7 days of data, you actually get everything from 7 days ago 
+until 7 days from now.  
 
 --format -f
 How should output be formatted.  Current options include html, xmobar, 
