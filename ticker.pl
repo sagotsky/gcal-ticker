@@ -107,7 +107,7 @@ sub agenda {
         $output .= $_->getText()
     }
 
-    return $output;
+    return substr($output,0,800);
 }
 
 sub help {

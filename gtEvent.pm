@@ -56,10 +56,12 @@ sub new{
 
     # store variables for later reference
     $self->{'date'} = $sdate;
+    $self->{'edate'} = $edate;
     $self->{'title'} = $title;
     $self->{'cal'} = $cal;
     $self->{'format'} = $cfg->format();
     $self->{'color'} = $colormap{$cal};
+    $self->{'notified'} = 0;
 
     bless $self;
     return $self;
@@ -71,7 +73,8 @@ sub getText {
     my $calcolor = $self->{'color'};
     my $format = $self->{'format'};
     my $timeleft = timeleft($self->{'date'});
-    if ($timeleft < -30) {return ""}; # this should check end date.  current events should get a special label (can dzen change bgcolor?) and expire at event end.  this should fix all day events I think.
+    my $endtime = timeleft($self->{'edate'});
+    if ($endtime < -10) {return ""};
     my $tcolor = timecolor($timeleft);
     my $time  = timeunit($timeleft);
 
@@ -85,11 +88,16 @@ sub getText {
     $sigil = color($sigil, $calcolor, $format);
     $text = color($text, $textcolor, $format);
     $time = color($time, $tcolor, $format);
+    if ($timeleft < 0) { $time = color( ':'.timeunit($endtime), '#cccccc', $format ) };
+
     $text = $sigil . ' ' . $text . ' ' . $time . ' ';
+    if ($timeleft < 0 && $self->{'format'} eq 'dzen') { $text = '^bg(#404040) ' . $text . '^bg() ' };
+
 
     return $text;
 }
 
+# minutes left until a date
 sub timeleft {
     my ($date) = @_;
     return int( ($date->epoch - DateTime->now()->epoch)/60 );
@@ -148,7 +156,7 @@ sub color {
     } elsif ($format eq "xmobar") {
         $text = "<fc=$color>$text</fc>";
     } elsif ($format eq "dzen") {
-        $text = "^fg($color)$text";
+        $text = "^fg($color)$text^fg()";
     } elsif ($format eq "term") {
         $text = $text;  # we need a return color...
     }
@@ -180,5 +188,11 @@ sub m2n {
 
     return $dates{$mon};
 }
+
+#sub escapeChars {
+#my ($str) = @_;
+#$str =~ s/([&'^><])/\\$1/g;
+#return $str;
+#}
 
 return(1);
