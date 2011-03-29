@@ -91,7 +91,7 @@ sub getText {
     if ($timeleft < 0) { $time = color( ':'.timeunit($endtime), '#cccccc', $format ) };
 
     $text = $sigil . ' ' . $text . ' ' . $time . ' ';
-    if ($timeleft < 0 && $self->{'format'} eq 'dzen') { $text = '^bg(#404040) ' . $text . '^bg() ' };
+    if ($timeleft < 0 && $self->{'format'} eq 'dzen') { $text = '^bg(#223344) ' . $text . '^bg() ' };
 
 
     return $text;

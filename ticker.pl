@@ -147,7 +147,8 @@ in rc file (see example)
 
 --colors -k
 Colors to tag each calendar.  Use one color per calendar or face the 
-wrath of ambiguous perl errors.
+wrath of ambiguous perl errors.  If using hex, quote your colors to 
+prevent the # from commenting out the color.
 
 --verbose --debug -v
 Show debug output
