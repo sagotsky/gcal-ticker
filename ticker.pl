@@ -60,7 +60,7 @@ sub getCalData {
     my @calData = ();
     d("getting gcal data");
 
-    my $start = DateTime->now( time_zone => $cfg->timezone() );
+    my $start = DateTime->now( time_zone => $cfg->timezone() ); #start needs a bigger range if we're catching older long term events
     my $end = DateTime->now( time_zone => $cfg->timezone() );
     $end->add( days => $cfg->days() );
     my $dates = '-d' . $start->ymd . ',' . $end->ymd;
