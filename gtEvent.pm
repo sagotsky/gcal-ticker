@@ -37,7 +37,7 @@ sub new{
         minute => $sminute,
         time_zone => $cfg->timezone(),
     );
-    # we don't actually use end date yet, but it's here for when it seems useful
+
     my $edate = DateTime->new (
         year => $eyear,
         month => $emonth,
@@ -61,7 +61,9 @@ sub new{
     $self->{'cal'} = $cal;
     $self->{'format'} = $cfg->format();
     $self->{'color'} = $colormap{$cal};
-    $self->{'notified'} = 0;
+    $self->{'doNotify'} = $cfg->notify();
+    $self->{'notifyOptions'} = " -t 0 -i /usr/share/pixmaps/gnome-set-time.png -h int:x:1200 -h int:y:160 ";
+    
 
     bless $self;
     return $self;
@@ -74,18 +76,24 @@ sub getText {
     my $format = $self->{'format'};
     my $timeleft = timeleft($self->{'date'});
     my $endtime = timeleft($self->{'edate'});
-    if ($endtime < -10) {return ""};
+    if (0 < $timeleft && $timeleft < 10 && $self->{'doNotify'}) { #should donotify be a function that sets itself?
+        delete $self->{'doNotify'} ;
+        #`notify-send "$self->{'cal'}" "$text"`; # might trigger twice, if new @events is created...
+        `notify-send $self->{'notifyOptions'} "$self->{'cal'}" "$text"`;
+    }
+    if ($endtime < 0) {return ""};
     my $tcolor = timecolor($timeleft);
     my $time  = timeunit($timeleft);
 
     my $textcolor = '#557799'; # getColor()
-    my $sigil = '»';
+    my $sigil = ' »';
 
     #timeleft, timeleft color
 
     # time popup?
 
-    $sigil = color($sigil, $calcolor, $format);
+    # open sigil: « ?
+    $sigil = color($sigil, $calcolor, $format); 
     $text = color($text, $textcolor, $format);
     $time = color($time, $tcolor, $format);
     if ($timeleft < 0) { $time = color( ':'.timeunit($endtime), '#cccccc', $format ) };

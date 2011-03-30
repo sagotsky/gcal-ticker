@@ -30,6 +30,7 @@ sub getcfg {
     $cfg->define("calendars|c|=s@");
     $cfg->define("colors|k|=s@");
     $cfg->define("verbose|debug|v|!");
+    $cfg->define("notify|n|!");
 
     # internal variables passed as part of $cfg.  don't expect then to be honored.
     $cfg->define("colormap|=s%");
@@ -40,6 +41,7 @@ sub getcfg {
     $cfg->refresh(600);
     $cfg->timezone('America/New_York');
     $cfg->seconds(60);
+    $cfg->notify(0);
 
     # read from file, override from cli
     $cfg->file("$ENV{HOME}/.gcalticker");
@@ -108,7 +110,7 @@ sub agenda {
         $output .= $_->getText()
     }
 
-    return substr($output,0,800);
+    return substr($output,0,800); # longer lines split, which cuts off sooner dates.
 }
 
 sub help {
@@ -139,6 +141,10 @@ How often should ticker be re-displayed.  Default is 60 seconds.
 
 --timezone -tz
 Local timezone.  Default is America/New_york
+
+--notify -n
+Notify when an event is near.  Uses notify-send.  Does not honor google
+alert settings.
 
 --calendars -c
 Comma separated list of calendars to download.  Calendars with spaces in
