@@ -25,7 +25,6 @@ An example dotgcalticker file is included.
 
 TODO:
     fix perl lib definitions to find gtEvent.pm (this one is downright embarrassing.)
-    event in progress sticky (maybe indicate with color and a new flag?  prepend time with a symbol?)
-    dzen2 backgrounds/fonts.  
-    notify-send alerts (optional)
+    ^ca() clickable areas.  a popup for each event in dzen?  what data does google cl provide?
+    dzen2 backgrounds/fonts.   (background color change for current events.  any other good font ideas?)
     output templates (eventually)
