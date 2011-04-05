@@ -62,7 +62,7 @@ sub new{
     $self->{'format'} = $cfg->format();
     $self->{'color'} = $colormap{$cal};
     $self->{'doNotify'} = $cfg->notify();
-    $self->{'notifyOptions'} = " -t 0 -i /usr/share/pixmaps/gnome-set-time.png -h int:x:1200 -h int:y:160 ";
+    $self->{'notifyOptions'} = " -i /usr/share/pixmaps/gnome-set-time.png -h int:x:1200 -h int:y:160 ";
     
 
     bless $self;
