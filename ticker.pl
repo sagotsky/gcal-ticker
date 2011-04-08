@@ -5,12 +5,14 @@
 
 use strict;
 use warnings;
+
+use FindBin;
+use lib "$FindBin::Bin/";
+
 use gtEvent;
 use DateTime;
 use AppConfig;
 use Data::Dumper;
-
-use lib "$ENV{PWD}";
 
 our $debugging = 0;
 sub d {
