@@ -48,10 +48,6 @@ sub new{
     );
 
     # figure out this cal's color
-    #my %colormap;
-    #@colormap{ @{$cfg->calendars()} } = @{$cfg->colors()};
-    #print Dumper %colormap;
-
     my %colormap = %{$cfg->colormap()};
 
     # store variables for later reference
@@ -64,7 +60,6 @@ sub new{
     $self->{'doNotify'} = $cfg->notify();
     $self->{'notifyOptions'} = " -t 5000 -i /usr/share/pixmaps/gnome-set-time.png -h int:x:1200 -h int:y:160 ";
     
-
     bless $self;
     return $self;
 }
@@ -74,33 +69,50 @@ sub getText {
     my $text = $self->{'title'};
     my $calcolor = $self->{'color'};
     my $format = $self->{'format'};
+    my ($sigil, $tcolor, $timesigil);
+
     my $timeleft = timeleft($self->{'date'});
     my $endtime = timeleft($self->{'edate'});
-    if (0 < $timeleft && $timeleft < 10 && $self->{'doNotify'}) { #should donotify be a function that sets itself?
-        delete $self->{'doNotify'} ;
+
+    #if (0 < $timeleft && $timeleft < 10 && $self->{'doNotify'}) { #should donotify be a function that sets itself?
+    #delete $self->{'doNotify'} ;
         #`notify-send "$self->{'cal'}" "$text"`; # might trigger twice, if new @events is created...
-        `notify-send $self->{'notifyOptions'} "$self->{'cal'}" "$text"`;
-    }
-    if ($endtime < 0) {return ""};
-    my $tcolor = timecolor($timeleft);
-    my $time  = timeunit($timeleft);
+        #`notify-send $self->{'notifyOptions'} "$self->{'cal'}" "$text"`;
+        #}
 
+    my $time   = timeunit($timeleft);
     my $textcolor = '#557799'; # getColor()
-    my $sigil = ' »';
 
-    #timeleft, timeleft color
+    if ($endtime < 0) {return ""};
 
-    # time popup?
+    # upcoming/current event pre
+    if ($timeleft > 0) {
+        # upcoming event
 
-    # open sigil: « ?
+        # notify (may happen twice if gcal downloads between notifications)
+        if (10 > $timeleft && $self->{'doNotify'} ) {
+            delete $self->{'doNotify'} ;
+            `notify-send $self->{'notifyOptions'} "$self->{'cal'}" "$text"`;
+        }
+
+        $tcolor = timecolor($timeleft);
+        $sigil = ' »';
+        $timesigil = "";
+    } else {
+        # current event
+        $sigil = ' «';
+        $tcolor = "#cccccc";
+        $timesigil = ":";
+        $time = timeunit($endtime);  
+    }
+
     $sigil = color($sigil, $calcolor, $format); 
-    $text = color($text, $textcolor, $format);
-    $time = color($time, $tcolor, $format);
-    if ($timeleft < 0) { $time = color( ':'.timeunit($endtime), '#cccccc', $format ) };
+    $text  = color($text, $textcolor, $format);
+    $time  = color($time, $tcolor, $format);
+    $text  = $sigil . ' ' . $text . ' ' . $timesigil.$time . ' ';
 
-    $text = $sigil . ' ' . $text . ' ' . $time . ' ';
+    # post process wrapping.
     if ($timeleft < 0 && $self->{'format'} eq 'dzen') { $text = '^bg(#223344) ' . $text . '^bg() ' };
-
 
     return $text;
 }
