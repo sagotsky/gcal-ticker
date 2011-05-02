@@ -14,11 +14,13 @@ use DateTime;
 use AppConfig;
 use Data::Dumper;
 
+# Debug messages are a sometimes food
 our $debugging = 0;
 sub d {
     print STDERR "> @_\n" if $debugging;
 }
 
+# Get config from cli, conf file, defaults.
 sub getcfg {
     my $cfg = AppConfig->new();
 
@@ -59,6 +61,7 @@ sub getcfg {
     return $cfg;
 }
 
+# download cal from google, return array of events
 sub getCalData {
     my ($cfg) = @_;
     my @calData = ();
@@ -87,14 +90,7 @@ sub getCalData {
     return @calData;
 }
 
-#sub makeEvents {
-#my ( $calref, $cfg) = @_;
-#my (@calData) = @$calref;
-#my @events = ();
-#
-#return @events;
-#}
-
+# gets agenda from event list
 sub agenda {
     d("making agenda");
     my ($events, $cfg) = @_;

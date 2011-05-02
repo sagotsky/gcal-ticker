@@ -7,6 +7,20 @@ use warnings;
 #use Data::Dumper;
 use Tie::IxHash;
 
+# log notifications so we don't repeat any alarms.  
+# deleting $self->notify in gtEvent isn't working
+# it should fail if a new ste of events downloads,
+# but fails way too frequently for that to be the case.
+our @notifications = ();
+sub notify {
+    my ($options, $cal, $text) = @_;
+    if (! grep(/$text/, @notifications) ) {
+        `notify-send $options "$cal" "$text"`;
+        push(@notifications, $text);
+        if ($#notifications > 10) {shift @notifications};
+    }
+}
+
 sub new{
     my ($module, $cal, $def, $cfg) = @_;
     my ($self) = {};
@@ -92,7 +106,8 @@ sub getText {
         # notify (may happen twice if gcal downloads between notifications)
         if (10 > $timeleft && $self->{'doNotify'} ) {
             delete $self->{'doNotify'} ;
-            `notify-send $self->{'notifyOptions'} "$self->{'cal'}" "$text"`;
+            #`notify-send $self->{'notifyOptions'} "$self->{'cal'}" "$text"`;
+            notify($self->{'notifyOptions'}, $self->{'cal'}, $text);
         }
 
         $tcolor = timecolor($timeleft);
