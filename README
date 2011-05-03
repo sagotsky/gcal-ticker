@@ -1,5 +1,6 @@
 Jon Sagotsky
 gcal-ticker
+https://github.com/sagotsky/gcal-ticker
 
 gcal-ticker uses perl to parse your calendar from Google CL.  It displays text 
 updates for as long as it stays running.  The idea is to pipe it into an xmobar
@@ -24,7 +25,12 @@ All command line options can be specified in a .gcalticker file.  This is recomm
 An example dotgcalticker file is included.
 
 TODO:
-Notification cache to prevent dupes.  Notifications happen between 0 and 10 min.  If our events clear and redownload during that time, a second note may appear.
-^ca() clickable areas.  a popup for each event in dzen?  what data does google cl provide?  ^ca events are not in current version, but in svn.  Maybe wait till released?
-dzen2 backgrounds/fonts.   (background color change for current events.  any other good font ideas?)
-output templates (eventually)
+- ^ca() clickable areas.  Maybe a popup for each event.  ^ca would require dzen2, 
+  so no more xmobar support.  Not available in current dzen2, so not worthwhile yet.  
+  Also depends on what additional info google publishes.
+
+- Background/font changes.  We're using background colors for active events.  Where
+  else can they go without being garish.  Also dzen2 only.
+
+- Configurable output.  Templates?  Awesome, but not high priority.
+
