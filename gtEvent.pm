@@ -73,6 +73,8 @@ sub new{
     $self->{'color'} = $colormap{$cal};
     $self->{'doNotify'} = $cfg->notify();
     $self->{'notifyOptions'} = " -t 5000 -i /usr/share/pixmaps/gnome-set-time.png -h int:x:1200 -h int:y:160 ";
+    if ($cfg->alert() >= 0) { $self->{'alert'} = $cfg->alert(); }
+    else { $self->{'alert'} = 5; }
     
     bless $self;
     return $self;

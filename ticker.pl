@@ -35,6 +35,7 @@ sub getcfg {
     $cfg->define("colors|k|=s@");
     $cfg->define("verbose|debug|v|!");
     $cfg->define("notify|n|!");
+    $cfg->define("alert|a|i");
 
     # internal variables passed as part of $cfg.  don't expect then to be honored.
     $cfg->define("colormap|=s%");
@@ -46,6 +47,7 @@ sub getcfg {
     $cfg->timezone('America/New_York');
     $cfg->seconds(60);
     $cfg->notify(0);
+    $cfg->alert(5);
 
     # read from file, override from cli
     $cfg->file("$ENV{HOME}/.gcalticker");
@@ -156,6 +158,11 @@ prevent the # from commenting out the color.
 
 --verbose --debug -v
 Show debug output
+
+--alert -a
+Popup notification appears n minutes before events.  Yes this is global.
+If you would like per event alerts, nag google to include alerts in 
+calendar api.
 
 EOF
 
