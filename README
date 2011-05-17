@@ -25,6 +25,9 @@ All command line options can be specified in a .gcalticker file.  This is recomm
 An example dotgcalticker file is included.
 
 TODO:
+- Error handling.  Google occasionally gives an AttributeError and Internal Server Error
+  In both cases, calendar should probably download again instead of going blank.
+
 - ^ca() clickable areas.  Maybe a popup for each event.  ^ca would require dzen2, 
   so no more xmobar support.  Not available in current dzen2, so not worthwhile yet.  
   Also depends on what additional info google publishes.
@@ -33,4 +36,5 @@ TODO:
   else can they go without being garish.  Also dzen2 only.
 
 - Configurable output.  Templates?  Awesome, but not high priority.
+
 

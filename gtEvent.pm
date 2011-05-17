@@ -102,11 +102,11 @@ sub getText {
     if ($endtime < 0) {return ""};
 
     # upcoming/current event pre
-    if ($timeleft > 0) {
+    if ($timeleft >= 0) {
         # upcoming event
 
         # notify (may happen twice if gcal downloads between notifications)
-        if (10 > $timeleft && $self->{'doNotify'} ) {
+        if ($self->{'alert'} > $timeleft && $self->{'doNotify'} ) {
             delete $self->{'doNotify'} ;
             #`notify-send $self->{'notifyOptions'} "$self->{'cal'}" "$text"`;
             notify($self->{'notifyOptions'}, $self->{'cal'}, $text);
