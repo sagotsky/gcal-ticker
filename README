@@ -7,7 +7,7 @@ updates for as long as it stays running.  The idea is to pipe it into an xmobar
 or dzen and have an agenda line displayed on your screen.
 
 Requirements:
-    Google CL           (svn 543 or newer)
+    Google CL           (0.9.13+  /  svn 543 or newer)
     gdata-python        (2.0.12+ should work, but I'm only testing on 2.0.14)
     perl
     perl DateTime       (libdatetime-perl)
