@@ -13,6 +13,7 @@ use gtEvent;
 use DateTime;
 use AppConfig;
 use Data::Dumper;
+use List::MoreUtils qw/ uniq /;
 
 # Debug messages are a sometimes food
 our $debugging = 0;
@@ -80,7 +81,7 @@ sub getCalData {
         my $cal = $_;
         #push( @calData, split(/\n/, $r) );
         # instead, lets just make the event in caldata and pass that back to be rendered.
-        foreach( split(/\n/, $r )) {
+        foreach( uniq split(/\n/, $r )) {
             if (  length($_) && ($_ !~ m/\[$cal\]/)  ) {  # skip heading line
                 push( @calData, gtEvent->new($cal, $_, $cfg) );
             }
