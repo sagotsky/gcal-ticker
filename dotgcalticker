@@ -13,3 +13,4 @@ days = 14
 refresh=600
 seconds=60
 timezone=America/New_York
+notifyoptions=" -t 5000 -i /usr/share/pixmaps/gnome-set-time.png -h int:x:1200 -h int:y:24 "

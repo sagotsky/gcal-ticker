@@ -36,6 +36,7 @@ sub getcfg {
     $cfg->define("colors|k|=s@");
     $cfg->define("verbose|debug|v|!");
     $cfg->define("notify|n|!");
+    $cfg->define("notifyoptions|no|=s");
     $cfg->define("alert|a|i");
 
     # internal variables passed as part of $cfg.  don't expect then to be honored.
@@ -146,6 +147,9 @@ Local timezone.  Default is America/New_york
 --notify -n
 Notify when an event is near.  Uses notify-send.  Does not honor google
 alert settings.
+
+--notifyoptions -no
+Options for notification.  Uses notify-send arguments.
 
 --calendars -c
 Comma separated list of calendars to download.  Calendars with spaces in
