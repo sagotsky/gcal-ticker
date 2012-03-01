@@ -43,6 +43,11 @@ sub new{
     if ($now_month > $smonth) {$syear += 1};
     if ($now_month > $emonth) {$eyear += 1};
 
+    # dirty hack to avoid leap year by fudging feb 29 
+    if ($sday == 29 && $smonth == 2 && $syear % 4 != 0) {
+      $sday = 28; 
+    }
+
     my $sdate = DateTime->new (
         year => $syear,
         month => $smonth,
@@ -52,6 +57,10 @@ sub new{
         time_zone => $cfg->timezone(),
     );
 
+    # dirty hack to avoid leap year by fudging feb 29 
+    if ($eday == 29 && $emonth == 2 && $syear % 4 != 0) {
+      $eday = 28; 
+    }
     my $edate = DateTime->new (
         year => $eyear,
         month => $emonth,
