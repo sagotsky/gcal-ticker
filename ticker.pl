@@ -112,7 +112,7 @@ sub agenda {
         $output .= $_->getText()
     }
 
-    return substr($output,0,800); # longer lines split, which cuts off sooner dates.
+    return substr($output,0,900); # longer lines split, which cuts off sooner dates.
 }
 
 sub help {
