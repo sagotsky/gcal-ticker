@@ -31,6 +31,7 @@ sub getcfg {
     $cfg->define("format|f|=s");
     $cfg->define("refresh|r|=i");
     $cfg->define("seconds|s|=i");
+    $cfg->define("maxchars|mc|=i");
     $cfg->define("timezone|tz|=s");
     $cfg->define("calendars|c|=s@");
     $cfg->define("colors|k|=s@");
@@ -50,6 +51,7 @@ sub getcfg {
     $cfg->seconds(60);
     $cfg->notify(0);
     $cfg->alert(5);
+    $cfg->maxchars(64);
 
     # read from file, override from cli
     $cfg->file("$ENV{HOME}/.gcalticker");

@@ -83,6 +83,7 @@ sub new{
     $self->{'doNotify'} = $cfg->notify();
     #$self->{'notifyOptions'} = " -t 5000 -i /usr/share/pixmaps/gnome-set-time.png -h int:x:1200 -h int:y:24 ";
     $self->{'notifyOptions'} = $cfg->notifyoptions();
+    $self->{'maxchars'} = $cfg->maxchars();
 
     if ($cfg->alert() >= 0) { $self->{'alert'} = $cfg->alert(); }
     else { $self->{'alert'} = 5; }
@@ -93,7 +94,7 @@ sub new{
 
 sub getText {
     my ($self) = @_;
-    my $text = $self->{'title'};
+    my $text = substr($self->{'title'}, 0, $self->{'maxchars'});
     my $calcolor = $self->{'color'};
     my $format = $self->{'format'};
     my ($sigil, $tcolor, $timesigil);
