@@ -14,7 +14,8 @@ use Tie::IxHash;
 our @notifications = ();
 sub notify {
     my ($options, $cal, $text) = @_;
-    if (! grep(/$text/, @notifications) ) {
+    #if (! grep(/$text/, @notifications) ) {
+    if (! grep(/\Q$text\E/, @notifications) ) {
         `notify-send $options "$cal" "$text"`;
         push(@notifications, $text);
         if ($#notifications > 10) {shift @notifications};
@@ -94,7 +95,11 @@ sub new{
 
 sub getText {
     my ($self) = @_;
-    my $text = substr($self->{'title'}, 0, $self->{'maxchars'});
+    my $text = $self->{'title'};
+    #my $text = substr($self->{'title'}, 0, $self->{'maxchars'}); # . '…';
+    if (length($text) > $self->{'maxchars'}) {
+      $text = substr($text, 0, $self->{'maxchars'}) . '..';
+    }
     my $calcolor = $self->{'color'};
     my $format = $self->{'format'};
     my ($sigil, $tcolor, $timesigil);
